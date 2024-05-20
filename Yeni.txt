@@ -30,3 +30,79 @@ Verileri yapılandırmak için kümeleme algoritmaları kullanılır.
 İlişkilendirme
 Birlikte meydana gelen öğeleri veya olayları ilişkilendirmek için ilişkilendirme algoritmaları kullanıyoruz.
 Apriori
+
+
+
+KNN: 
+K-En Yakın Komşular (KNN), hem sınıflandırma hem de regresyon görevleri için kullanılabilen basit bir denetimli makine öğrenimi algoritmasıdır.Temel fikir, bir veri noktasının tahmin edilmesinde, o noktaya en yakın komşularının etkisini kullanmaktır.
+Çalışma adımları: 
+Veri setini yükleyin
+Veriyi eğitim ve test setlerine ayırın
+Veriyi ölçeklendirin(Normalizasyon)
+KNN modelini oluşturun ve eğitin
+Tahmin yapın
+Doğruluk(accuracy) hesapla
+
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+# Veri setini yükleyin
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Veriyi eğitim ve test setlerine ayırın
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Veriyi ölçeklendirin
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# KNN modelini oluşturun
+knn = KNeighborsClassifier(n_neighbors=3)
+
+# Modeli eğitim verisi ile eğitin
+knn.fit(X_train, y_train)
+
+# Test seti ile tahmin yapın
+y_pred = knn.predict(X_test)
+
+# Doğruluk skorunu hesaplayın
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.2f}")
+
+
+Lojistik Regresyon:
+Lojistik Regresyon, bağımsız değişkenlerin ağırlıklarını ve etkilerini kullanarak, her bir sınıfın olasılığını tahmin eder. Ancak, doğrudan sınıfların tahmin edilmesi yerine, bir girişin her sınıfa ait olma olasılığı verilir. Bu olasılıklar daha sonra bir eşik değeri (threshold) kullanılarak sınıflara dönüştürülür.
+
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+# Veri setini yükleyin
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Veriyi eğitim ve test setlerine ayırın
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Lojistik regresyon modelini oluşturun
+logreg = LogisticRegression(max_iter=200)
+
+# Modeli eğitim verisi ile eğitin
+logreg.fit(X_train, y_train)
+
+# Test seti ile tahmin yapın
+y_pred = logreg.predict(X_test)
+
+# Doğruluk skorunu hesaplayın
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.2f}")
+
+SVM:
+Destek vektör makineleri:
