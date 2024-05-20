@@ -1,0 +1,32 @@
+Makine öğrenmesi yapay zekanın bir dalıdır. 
+Genellikle istatistiksel olarak çalışır ve verilere büyük oranda bağlıdır. Bu daha çok veriye ve doğru algoritmaya bağlıdır.
+Kural tabanlı olarak çalışır. Tahminlerini buna uygun şekilde yapar.
+Veri olmadan makine öğrenmesi algoritmaları kullanılamaz.
+Başarılı bir sonuç almak için verilerin doğru olması gerekir. Aksi takdirde eksik ya da hatalı veriler sonucu manipüle edebilir.
+Veriler işlendikten ve düzenlendikten sonra grafiğe çevrilir.
+Üzerinde çalışılacak veriler ayrıştırılır. (target)
+veriler test ve eğitim verilerine ayrılır. (doğrulamaya da ayrılabiliyor. validation)
+Model eğitilir
+Test için tahmin fonksiyonu oluşturulur.
+Doğruluk kontrol edilir. (Hata matrisi)
+
+Bazı makine öğrenmesi algoritmaları:
+Karar ağaçları
+Sinir ağları
+Olasılık ağları
+KNN
+SVM
+
+Makine öğrenmesi algoritmaları:
+Regresyon
+Sürekli değerleri tahmin etmek için kullanılır. 
+(lineer regresyon, lojistik regresyon, üstel regresyon, polinom regresyon, logaritmik regresyon)
+Sınıflandırma
+Bir dizi öğenin(mesela sağlık verileri) sınıfını veya kategorisini tahmin etmek(hastalık durumu) için sınıflandırma algoritmaları kullanılır. 
+(KNN, Karar ağaçları, Rastgele orman, SVM,Naive bayes)
+Kümeleme
+Verileri yapılandırmak için kümeleme algoritmaları kullanılır.
+(K-means, DBSCAN, Mean shift, Hierarchical)
+İlişkilendirme
+Birlikte meydana gelen öğeleri veya olayları ilişkilendirmek için ilişkilendirme algoritmaları kullanıyoruz.
+Apriori
