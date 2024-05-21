@@ -106,3 +106,148 @@ print(f"Accuracy: {accuracy:.2f}")
 
 SVM:
 Destek vektör makineleri:
+Bir destek vektör makinesi (SVM), hem sınıflandırma hem de regresyon görevleri için kullanılabilen denetimli bir makine öğrenimi algoritmasıdır. İki sınıfın örnekleri arasındaki en büyük farkla farklı sınıfları ayırmak için bir hiper düzlem kullanır. Bu, modelin genelleme yeteneğini geliştirmeye yardımcı olur.
+SVM, bu marjini maksimize eden hiperdüzlemi seçer, böylece yeni veri noktaları sınıflandırılırken daha iyi genelleme yapabilir.
+
+import pandas as pd
+
+veri = pd.read_csv("/kaggle/input/default-of-credit-card-clients-dataset/UCI_Credit_Card.csv")
+
+print(veri.head())
+
+from sklearn.model_selection import train_test_split
+
+X = veri.drop("default.payment.next.month", axis=1)
+y = veri["default.payment.next.month"]
+
+X_egitim, X_test, y_egitim, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
+
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_egitim = scaler.fit_transform(X_egitim)
+X_test = scaler.transform(X_test)
+
+from sklearn.svm import SVC
+
+svm_modeli = SVC(kernel='linear')
+svm_modeli.fit(X_egitim, y_egitim)
+
+dogruluk = svm_modeli.score(X_test, y_test)
+print("Model Doğruluğu:", dogruluk)
+
+Random Forest:
+Rastgele orman, eğitim sırasında çok sayıda karar ağacı oluşturarak ve tek tek ağaçların sınıflarının modu olan sınıfı çıkararak çalışan, topluluk denetimli bir makine öğrenimi algoritmasıdır. Verilerin büyük bir kısmı eksik olduğunda doğruluğu korur.
+Random Forest algoritması, birden fazla karar ağacının (decision tree) oluşturulmasını içerir. Her karar ağacı, rastgele örneklerle (bootstrap sampling) ve rastgele özelliklerle (feature sampling) eğitilir. Bu şekilde, her bir karar ağacı farklı bir alt küme veri ve özellik kümesi üzerinde eğitilir, bu da modele çeşitlilik katar.
+Random Forest'ın avantajları arasında yüksek doğruluk, overfitting'e karşı direnç, farklı özellik türlerini (kategorik, sayısal) bir arada kullanabilme yeteneği ve dengesiz veri setlerinde etkili performans gösterme kabiliyeti bulunur.
+
+
+# Import libraries
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, confusion_matrix
+
+# Load data
+
+df = pd.read_csv("/kaggle/input/pima-indians-diabetes-database/diabetes.csv")
+
+# Exploratory data analysis 
+print(df.shape)
+print(df.describe())
+
+# Preprocess data
+X = df.drop('Outcome', axis=1) 
+y = df['Outcome']
+
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train model
+rf = RandomForestClassifier(n_estimators=100)
+rf.fit(X_train, y_train)
+
+# Evaluate model 
+y_pred = rf.predict(X_test)
+print('Accuracy:', accuracy_score(y_test, y_pred))
+
+Decision Trees:
+Karar ağaçları, birçok makine öğrenimi algoritmasından biridir ve sınıflandırma ve regresyon problemlerinde kullanılır. Bir karar ağacı, bir veri kümesindeki özelliklere dayalı olarak bir dizi karar düğümü ve sonuçları olan yaprak düğümleri içeren bir ağaç yapısıdır. Karar ağaçları, veri kümesini belirli özelliklere göre bölerek ve her düğümdeki en uygun bölünmeyi seçerek veri kümesini sınıflandırmak veya regresyon yapmak için kullanılır. 
+Daha hızlı eğitim süreci
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+df = pd.read_csv('/kaggle/input/uci-ml-datasets/hou_all.csv')
+
+X = df.drop('0', axis=1)
+y = df['0']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+#Degerlendir ve Tahmin Et
+clf = DecisionTreeClassifier()
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+
+#Dogruluk degeri dondur
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy: {accuracy}')
+print(confusion_matrix(y_test, y_pred))
+
+Naive Bayes:
+Bayes Teoremi, bir olayın gerçekleşme olasılığını, bu olayın meydana gelmesine ilişkin kanıtlara dayanarak güncellemeyi sağlayan bir formül olarak tanımlanır
+
+
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn import metrics
+import pandas as pd
+
+df = pd.read_csv('/kaggle/input/malware-executable-detection/uci_malware_detection.csv')
+
+X = df.drop('Label', axis=1)
+y = df['Label']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
+
+#Naive Bayes Sınıflandırıcısını Başlat
+gnb = GaussianNB()
+
+gnb.fit(X_train, y_train)
+
+y_pred = gnb.predict(X_test)
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+print(confusion_matrix(y_test, y_pred))
+
+K-Means:
+K-Means kümeleme, veri noktalarını belirli sayıda küme veya k-merkezine göre gruplandırır. Algoritma, önceden belirlenmiş k sayısında küme merkezlerini rastgele yerleştirir ve veri noktalarını bu merkezlere göre gruplandırır. Ardından, küme merkezleri tekrar hesaplanır ve veri noktaları bu yeni merkezlere göre yeniden gruplandırılır. Bu işlem, küme merkezlerinin hareket etmeyene kadar veya belirli bir iterasyon sayısına ulaşılana kadar tekrarlanır.
+
+import pandas as pd
+from sklearn.cluster import KMeans, AgglomerativeClustering
+from sklearn.mixture import GaussianMixture
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import silhouette_score
+
+# Veri setini yükleme ve ön işleme
+df = pd.read_csv('/kaggle/input/dry-bean-dataset/Dry_Bean.csv')
+
+# Bağımlı değişken (y) ve bağımsız değişkenler (X) olarak ayırma
+X = df.iloc[:, :-1].values
+y = df.iloc[:, -1].values
+
+# Veri setini train ve test olarak ayırma
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# K-Means Kümeleme
+kmeans = KMeans(n_clusters=5) #5 parçaya ayrılır
+kmeans.fit(X_train) 
+kmeans_labels = kmeans.predict(X_test)
+kmeans_silhouette_score = silhouette_score(X_test, kmeans_labels)
+
+# Sonuçları değerlendirme
+print("K-Means Silhouette Score:", kmeans_silhouette_score)
